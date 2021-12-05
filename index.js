@@ -3,7 +3,7 @@ const fastify = require('fastify')({ logger: true })
 fastify.register(require('fastify-mongodb'), {
   forceClose: true,
   
-  url: `mongodb+srv://admin:fastifyweb2@clusterseminariofastify.kuhnc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+  url: `mongodb+srv://<user>:<passoword>@clusterseminariofastify.kuhnc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 })
 
 fastify.register(require('fastify-formbody'))
