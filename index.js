@@ -1,4 +1,8 @@
 const fastify = require('fastify')({ logger: true })
+const createError = require('fastify-error')
+const userCreateError = createError('USER_CREATE_ERROR', 'User was not created')
+const userGetError = createError('USER_GET_ERROR', 'Users could not be listed')
+
 
 fastify.register(require('fastify-mongodb'), {
   forceClose: true,
@@ -19,6 +23,7 @@ fastify.get('/user', async function (req, res) {
     const users = await this.mongo.db.collection('users').find({}).toArray();
     res.send(users);
   } catch (error) {
+    console.log(new userGetError())
     res.send(error);
   }
 
@@ -40,6 +45,7 @@ fastify.post('/user', function (req, res) {
     res.redirect('/cadastro')
   })
   .catch(error => {
+    console.log(new userCreateError());
     res.send(error);
   })
 })
