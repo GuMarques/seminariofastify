@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "npm install",
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,9 +16,9 @@
     "fastify-mongodb": "^4.1.1",
     "fastify-nextjs": "^7.0.0",
     "fastify-rate-limit": "^5.6.2",
-    "mongodb": "^4.2.1",
-    "next": "^12.0.6",
     "handlebars": "^4.7.7",
+    "mongodb": "^4.2.1",
+    "next": "^12.0.7",
     "point-of-view": "^4.15.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"

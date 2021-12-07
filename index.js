@@ -1,14 +1,19 @@
+// IMPORTANDO O FASTIFY
 const fastify = require('fastify')({ logger: true })
+
+// DEFININDO CONSTANTES
+
 const join = require('path').join;
 const createError = require('fastify-error')
 const userInsertError = createError('USER_INSERT_ERROR', 'User was not inserted')
 const userGetError = createError('USER_GET_ERROR', 'Users could not be listed')
 
+// REGISTRANDO PLUGINS
 
 fastify.register(require('fastify-mongodb'), {
   forceClose: true,
   
-  url: `mongodb+srv://<user>:<passoword>@clusterseminariofastify.kuhnc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+  url: `mongodb+srv://<user>:<password></password></user>web2@clusterseminariofastify.kuhnc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 })
 
 fastify.register(require('fastify-formbody'))
@@ -30,6 +35,19 @@ fastify.register(require('fastify-rate-limit'), {
   global: false,
   max: 100,
   timeWindow: '1 minute'
+})
+
+// ROTAS DA APLICAÇÃO
+
+fastify.get('/', {
+  config: {
+    rateLimit: {
+      max: 1,
+      timeWindow: 5000
+    }
+  }
+}, async (req, res) => {
+  return { hello: 'world' }
 })
 
 fastify.get('/user', async function (req, res) {
@@ -64,20 +82,11 @@ fastify.post('/user', function (req, res) {
   })
 })
 
-fastify.get('/', {
-  config: {
-    rateLimit: {
-      max: 1,
-      timeWindow: 5000
-    }
-  }
-}, async (req, res) => {
-  return { hello: 'world' }
-})
-
 fastify.get('/test', (req, reply) => {
   reply.view('view/test', { title: 'usando Handlebars no Fastify', text: "Point of View" })
 })
+
+//INICIANDO A APLICAÇÃO
 
 const start = async () => {
   try {
