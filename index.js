@@ -1,4 +1,5 @@
 const fastify = require('fastify')({ logger: true })
+const join = require('path').join;
 const createError = require('fastify-error')
 const userInsertError = createError('USER_INSERT_ERROR', 'User was not inserted')
 const userGetError = createError('USER_GET_ERROR', 'Users could not be listed')
@@ -17,6 +18,13 @@ fastify.register(require('fastify-nextjs'))
   fastify.next('/cadastro')
   fastify.next('/consulta')
 })
+
+fastify.register(require("point-of-view"), {
+  engine: {
+    handlebars: require("handlebars"),
+    templates: join(__dirname, 'view/'),
+  },
+});
 
 fastify.get('/user', async function (req, res) {
   try {
@@ -52,6 +60,10 @@ fastify.post('/user', function (req, res) {
 
 fastify.get('/', async (req, res) => {
   return { hello: 'world' }
+})
+
+fastify.get('/test', (req, reply) => {
+  reply.view('view/test', { title: 'usando Handlebars no Fastify', text: "Point of View" })
 })
 
 const start = async () => {
