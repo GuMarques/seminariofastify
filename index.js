@@ -26,6 +26,12 @@ fastify.register(require("point-of-view"), {
   },
 });
 
+fastify.register(require('fastify-rate-limit'), {
+  global: false,
+  max: 100,
+  timeWindow: '1 minute'
+})
+
 fastify.get('/user', async function (req, res) {
   try {
     const users = await this.mongo.db.collection('users').find({}).toArray();
@@ -58,7 +64,14 @@ fastify.post('/user', function (req, res) {
   })
 })
 
-fastify.get('/', async (req, res) => {
+fastify.get('/', {
+  config: {
+    rateLimit: {
+      max: 1,
+      timeWindow: 5000
+    }
+  }
+}, async (req, res) => {
   return { hello: 'world' }
 })
 
