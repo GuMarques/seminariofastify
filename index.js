@@ -1,6 +1,6 @@
 const fastify = require('fastify')({ logger: true })
 const createError = require('fastify-error')
-const userCreateError = createError('USER_CREATE_ERROR', 'User was not created')
+const userInsertError = createError('USER_INSERT_ERROR', 'User was not inserted')
 const userGetError = createError('USER_GET_ERROR', 'Users could not be listed')
 
 
@@ -45,7 +45,7 @@ fastify.post('/user', function (req, res) {
     res.redirect('/cadastro')
   })
   .catch(error => {
-    console.log(new userCreateError());
+    console.log(new userInsertError());
     res.send(error);
   })
 })
